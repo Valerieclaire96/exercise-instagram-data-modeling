@@ -13,6 +13,7 @@ class User(Base):
         __tablename__ = 'user'
         id = Column(Integer, primary_key=True)
         name = Column(String(250), nullable=False)
+        post_id = Column(Integer, ForeignKey('user.id'))
 
 class Post(Base):
         __tablename__ = 'post'
@@ -24,13 +25,19 @@ class Comment(Base):
         __tablename__ = 'comment'
         id = Column(Integer, primary_key=True)
         name = Column(String(250), nullable=False)
-        comment = Column(Integer, ForeignKey("post.id"))
+        comment_id = Column(Integer, ForeignKey("post.id"))
 
 class Reaction(Base):
         __tablename__ = 'reaction'
         id = Column(Integer, primary_key=True)
         name = Column(String(250), nullable=False)
         reaction_id = Column(Integer, ForeignKey("post.id"))
+
+class Followers(Base):
+        __tablename__ = 'followers'
+        id = Column(Integer, primary_key=True)
+        name = Column(String(250), nullable=False)
+        comment_id = Column(Integer, ForeignKey("user.id"))
 
 ## Draw from SQLAlchemy base
 try:
