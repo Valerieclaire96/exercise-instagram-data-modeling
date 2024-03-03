@@ -13,31 +13,36 @@ class User(Base):
         __tablename__ = 'user'
         id = Column(Integer, primary_key=True)
         name = Column(String(250), nullable=False)
-        post_id = Column(Integer, ForeignKey('user.id'))
+        post_id = Column(Integer, ForeignKey('post.id'))
+        followers = Column(Integer, ForeignKey('follower.id'))
 
 class Post(Base):
         __tablename__ = 'post'
         id = Column(Integer, primary_key=True)
-        name = Column(String(250), nullable=False)
+        content = Column(String(250), nullable=False)
         user_id = Column(Integer, ForeignKey("user.id"))
 
 class Comment(Base):
         __tablename__ = 'comment'
         id = Column(Integer, primary_key=True)
-        name = Column(String(250), nullable=False)
-        comment_id = Column(Integer, ForeignKey("post.id"))
+        comment = Column(String(250), nullable=False)
+        post_id = Column(Integer, ForeignKey("post.id"))
+        follow_id = Column(Integer, ForeignKey("follower.id"))
 
 class Reaction(Base):
         __tablename__ = 'reaction'
         id = Column(Integer, primary_key=True)
-        name = Column(String(250), nullable=False)
-        reaction_id = Column(Integer, ForeignKey("post.id"))
+        reaction = Column(String(250), nullable=False)
+        post_id = Column(Integer, ForeignKey("post.id"))
+        follow_id = Column(Integer, ForeignKey("follower.id"))
 
 class Followers(Base):
         __tablename__ = 'followers'
         id = Column(Integer, primary_key=True)
         name = Column(String(250), nullable=False)
-        comment_id = Column(Integer, ForeignKey("user.id"))
+        following = Column(Integer, ForeignKey("user.id"))
+        comment_id = Column(Integer, ForeignKey("comment.id"))
+        reaction_id = Column(Integer, ForeignKey("reaction.id"))
 
 ## Draw from SQLAlchemy base
 try:
